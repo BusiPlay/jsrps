@@ -19,10 +19,17 @@
 
         function getPlayerInput(label) {
             let playerChoice = firstLetterCapitalize(prompt(label).toLowerCase())
+            while (!choices.includes(playerChoice)) {
+                playerChoice = firstLetterCapitalize(prompt("Sorry please try again." + label ))
+            }
             return playerChoice
         }
 
-        function playRound(playerSelection, computerSelection) {
+        function playRound() {
+            playerSelection = getPlayerInput("Please enter Rock, Paper or Scissors")
+            computerSelection = computerPlay()
+            console.log("Player selected " + playerSelection)
+            console.log("Computer selected " + computerSelection)
             if (playerSelection == computerSelection) {
                 return "Tie"
             }
@@ -35,15 +42,34 @@
             else return "Computer Wins"
         }
 
-        let playerChoice = getPlayerInput("Please Enter Rock, Paper or Scissors")
-        while (!choices.includes(playerChoice)) {
-            playerChoice = getPlayerInput("Sorry, try again. Valid inputs are Rock, Paper, Scissors")
+        function game() {
+            let computerWins = 0
+            let playerWins = 0
+            for (i=0; i<5; i++ ) {
+                result = playRound()
+                if (result == "Player Wins") {
+                    console.log("Player wins game " + (i+1))
+                    playerWins++
+                }
+                else if (result == "Computer Wins") {
+                    console.log("Computer wins game " + (i+1))
+                    computerWins++
+                }
+                else console.log("Game " + (i+1) + " is a tie!")
+            }
+            console.log("Player won " + playerWins + " games.")
+            console.log("Computer won " + computerWins + " games.")
+            if (playerWins == computerWins) {
+                console.log("It's a tie!")
+            }
+            else if (playerWins > computerWins) {
+                console.log("Player Wins!")
+            }
+            else console.log("Computer Wins :-(")
         }
-        let computerChoice = computerPlay()
-        let result = playRound(playerChoice,computerChoice)
-        console.log("Player choice is " + playerChoice)
-        console.log("Computer chice is " + computerChoice)
-        console.log(result)
+
+        game()
+
     </script>   
 </body>
 </html>
